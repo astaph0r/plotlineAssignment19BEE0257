@@ -1,6 +1,6 @@
 let lat = [];
 let lng = [];
-let placeIDs =[];
+let placeIDs = [];
 
 function initialize() {
 	const CONFIGURATION = {
@@ -53,9 +53,10 @@ function initialize() {
 			const place = autocomplete.getPlace();
 			lat[i] = place.geometry.location.lat();
 			lng[i] = place.geometry.location.lng();
-			placeIDs[i]=place.place_id;
+			placeIDs[i] = place.place_id;
 			// fillIn;
 			renderAddress(place, marker[i]);
+			setBounds();
 		});
 		autocompletes.push(autocomplete);
 	}
@@ -65,25 +66,38 @@ function initialize() {
 		marker.setPosition(place.geometry.location);
 		marker.setVisible(true);
 	}
+
+	function setBounds() {
+		if (lat.length > 1 && lng.length > 1) {
+			let bounds = new google.maps.LatLngBounds();
+			bounds.extend({lat: lat[1], lng: lng[1]});
+			bounds.extend({lat: lat[0], lng: lng[0]});
+			map.fitBounds(bounds);
+		}
+	}
 }
 
 function getDistance() {
 	distDiv = document.getElementById("distance");
+	if (placeIDs.length < 2) {
+		distDiv.innerHTML = "<h4>Please provide both cities.</h4>";
+		return;
+	}
 	fetch("/distance", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
 		},
-		body: JSON.stringify({placeIDs}),
+		body: JSON.stringify({ placeIDs }),
 	})
 		.then((response) => response.json())
 		.then((data) => {
 			console.log("Success:", data);
-			distDiv.innerHTML = "<h4>"+data.text +" or "+ data.value+" m</h4>"
-
+			distDiv.innerHTML =
+				"<h4>" + data.text + " or " + data.value + " m</h4>";
 		})
 		.catch((error) => {
 			console.error("Error:", error);
+			distDiv.innerHTML = "<h4>Some Error Occured</h4>";
 		});
 }
-
