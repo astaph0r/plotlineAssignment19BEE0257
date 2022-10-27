@@ -98,6 +98,6 @@ function getDistance() {
 		})
 		.catch((error) => {
 			console.error("Error:", error);
-			distDiv.innerHTML = "<h4>Some Error Occured</h4>";
+			distDiv.innerHTML = "<h4>No routes available.</h4>";
 		});
 }
