@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Address Selection</title>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="./stylesheets/style.css" />
+		<script src="./javascripts/app.js"></script>
+	</head>
+	<body >
+		<div class="card-container">
+			<div class="panel">
+				<div>
+					<img
+						class="sb-title-icon"
+						src="https://fonts.gstatic.com/s/i/googlematerialicons/location_pin/v5/24px.svg"
+						alt=""
+					/>
+					<span class="sb-title">Address Selection</span>
+				</div>
+				<form action="" method="post" name="theform" id="theform">
+					<input
+						type="text"
+						placeholder="City1"
+						class="autofast"
+						id="autocomplete"
+						autocomplete="off"
+					/>
+					<input
+						type="text"
+						placeholder="City2"
+						class="autofast"
+						id="autocomplete2"
+						autocomplete="off"
+					/>
+				</form>
+				<div id="distance"></div>>
+				<button class="button-cta" onclick=getDistance()>Calculate</button>
+			</div>
+			<div class="map" id="gmp-map"></div>
+		</div>
+		<script
+			async
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgQL4pQ0zgFAkOXclUlWh1L8IzV8-2xnA&libraries=places&callback=initialize"
+		></script>
+	</body>
+</html>
